@@ -1,24 +1,59 @@
-;;;
-;;; shell-switch - make it easy to switch between *shell* buffers.
-;;;
-;;; 
-;;;
-;;; (1) make sure shell-switch is on your path.  You may need to
-;;;     add something like this to your ~/.emacs (or ~/.xemacs/init.el):
-;;;
-;;;     (add-to-list 'load-path (concat (getenv "HOME") "/.xemacs"))
-;;;
-;;; (2) In your ~/.emacs (or ~/.xemacs/init.el):
-;;;
-;;;     (require 'shell-switch)
-;;;
-;;; (3) I prefer to use this binding but it's up to you to put this
-;;;     in your ~/.emacs (or ~/.xemacs/init.el):
-;;;     (global-set-key [(control c) (s)] 'shell-switch)
-;;;
+;;; shell-switch.el --- Easily switch between *shell* buffers
+     
+;; Copyright (C) 2018 Pete Ware
+
+;; Author: Pete Ware <ware@peteware.com>
+;; Maintainer: Pete Ware <ware@peteware.com>
+;; Created: 1 Jan 2001
+;; Keywords: shell-mode comint
+;; Homepage: https://github.com/peteware/shell-switch
+
+;; This file is not part of GNU Emacs.
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+
+;;; Commentary:
+;;
+;; This adds two commands ``shell-switch'' and ``shell-switch-other-window''
+;; that makes it easy to switch between multiple `*shell*' buffers.
+;;
+;; If there are no shell-mode buffers, then create one with ``\\[shell]''.
+;;
+;; If there is exactly one shell-mode buffer then jump to the end
+;; of the buffer.
+;;
+;; If there is more then one shell-mode buffer then prompt
+;; for the shell-mode buffer to choose with the most
+;; recent one first and switch to the selected buffer.
+;; If the buffer selected is the current buffer, then
+;; switch to the end of the buffer.
+;;
+;; (use-package shell-switch
+;;   :commands (shell-switch shell-switch-other-window)
+;;   :init
+;;   (progn
+;;     (bind-key* "C-c s" 'shell-switch)
+;;     (bind-keys* :prefix-map clt-c-4-keymap
+;;                 :prefix "C-c 4"
+;;                 ("s" . shell-switch-other-window))))
+
+;;; Code:
 (provide 'shell-switch)
 (require 'cl)
-;(require 'cl-seq)
 
 (defvar shell-switch-last nil
   "The last buffer switched to.")
@@ -141,3 +176,4 @@ to create a new shell buffer or switch to *shell*."
   "Return an alist with (buffer-name . buffer)."
   (cons (buffer-name buffer) buffer))
 
+;;; shell-switch.el ends here
