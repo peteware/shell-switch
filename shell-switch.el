@@ -5,7 +5,8 @@
 ;; Author: Pete Ware <ware@peteware.com>
 ;; Maintainer: Pete Ware <ware@peteware.com>
 ;; Created: 1 Jan 2001
-;; Keywords: shell-mode comint
+;; Version: 1.0
+;; Keywords: processes terminals
 ;; Homepage: https://github.com/peteware/shell-switch
 
 ;; This file is not part of GNU Emacs.
